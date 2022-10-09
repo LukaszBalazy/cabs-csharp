@@ -1,4 +1,6 @@
-﻿using System;
+﻿using LegacyFighter.Cabs.Entity;
+using LegacyFighter.Cabs.Service;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,10 +10,26 @@ namespace CabsIntegrationTests
 {
     public class ValidateDriverLicenseIntegrationTest
     {
+        private IDriverService DriverService => _app.DriverService;
+        private CabsApp _app = default!;
 
-        public void CannotCreateActiveDriverWithInvalidLicense()
+        [SetUp]
+        public void InitializeApp()
         {
+            _app = CabsApp.CreateInstance();
+        }
 
+        [TearDown]
+        public async Task DisposeOfApp()
+        {
+            await _app.DisposeAsync();
+        }
+
+        [Test]
+        public async Task CannotCreateActiveDriverWithInvalidLicense()
+        {
+            // Then
+            await this.Awaiting(_ => CreateActiveDriverWithLicense("invalidLicense")).Should().ThrowExactlyAsync<ArgumentException>();
         }
 
         public void CanCreateActiveDriverWithValidLicense()
@@ -42,6 +60,17 @@ namespace CabsIntegrationTests
         public void CannotActivateDriverWithInvalidLicense()
         {
 
+        }
+
+        private async Task<Driver> CreateActiveDriverWithLicense(string license)
+        {
+            return await DriverService.CreateDriver(
+              license,
+              "Kowalski",
+              "Jan",
+              Driver.Types.Regular,
+              Driver.Statuses.Active,
+              "photo");
         }
     }
 }
