@@ -17,7 +17,7 @@ namespace LegacyFighter.Cabs.Entity
         {
             if (license == null || !license.Any() || !Regex.IsMatch(license, DriverLicenseRegex))
             {
-                throw new InvalidOperationException("Status cannot be ACTIVE. Illegal license no = " + license);
+                throw new ArgumentException("Status cannot be ACTIVE. Illegal license no = " + license);
             }
 
             return new DriverLicense(license);

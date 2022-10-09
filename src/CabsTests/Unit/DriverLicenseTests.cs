@@ -10,11 +10,11 @@ namespace LegacyFighter.CabsTests.Unit
         {
             this.Invoking(_ => DriverLicense.withLicense("invalid"))
                 .Should()
-                .ThrowExactly<InvalidOperationException>("Status cannot be ACTIVE. Illegal license no = invalid");
+                .ThrowExactly<ArgumentException>("Status cannot be ACTIVE. Illegal license no = invalid");
 
             this.Invoking(_ => DriverLicense.withLicense(""))
                 .Should()
-                .ThrowExactly<InvalidOperationException>("Status cannot be ACTIVE. Illegal license no = ");
+                .ThrowExactly<ArgumentException>("Status cannot be ACTIVE. Illegal license no = ");
         }
 
         [Test]
