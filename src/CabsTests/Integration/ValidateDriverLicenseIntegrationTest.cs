@@ -24,13 +24,6 @@ namespace LegacyFighter.CabsTests.Integration
         }
 
         [Test]
-        public async Task CannotCreateActiveDriverWithInvalidLicense()
-        {
-            // Then
-            await this.Awaiting(_ => CreateActiveDriverWithLicense("invalidLicense")).Should().ThrowExactlyAsync<ArgumentException>();
-        }
-
-        [Test]
         public async Task CanCreateActiveDriverWithValidLicense()
         {
             // when
